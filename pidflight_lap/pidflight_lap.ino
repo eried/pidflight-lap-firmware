@@ -56,6 +56,7 @@ void setup()
   Serial.begin(115200);
 
 #ifdef ESP32
+  EEPROM.begin(16);
   pinMode(PIN_LED, OUTPUT);
   digitalWrite(PIN_LED, HIGH);
   ESP_BT.begin("ESP32 Drone Timer"); //Name of your Bluetooth Signal
@@ -412,9 +413,9 @@ void writeEEPROM(void)
   EEPROM.write(EEPROM_ADR_RSSI_FILTER_R_L, lowByte(rssi_filter_r));
   EEPROM.write(EEPROM_ADR_RSSI_FILTER_R_H, highByte(rssi_filter_r));
 
-  #ifdef ESP32
+#ifdef ESP32
   EEPROM.commit();
-  #endif
+#endif
 }
 
 void resetEEPROM(void)
