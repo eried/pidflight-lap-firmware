@@ -8,6 +8,11 @@
 #include "buf_writer.c"
 #include "serial_msp.c"
 
+#ifdef ESP32
+#include "BluetoothSerial.h"
+BluetoothSerial ESP_BT; //Object for Bluetooth
+#endif
+
 #ifdef SOFTWARE_SERIAL
 #include <SoftwareSerial.h>
 SoftwareSerial swSerial(PIN_SOFTSERIAL_RX, PIN_SOFTSERIAL_TX);
@@ -41,10 +46,21 @@ uint32_t rssi_peak_time = 0;
 
 uint8_t debug = 0;
 
+#ifdef ESP32
+unsigned long last_activity;
+#endif
+
 void setup()
 {
   // Setup serial connections
   Serial.begin(115200);
+
+#ifdef ESP32
+  pinMode(PIN_LED, OUTPUT);
+  digitalWrite(PIN_LED, HIGH);
+  ESP_BT.begin("ESP32 Drone Timer"); //Name of your Bluetooth Signal
+#endif
+
 #ifdef SOFTWARE_SERIAL
   swSerial.begin(9600);
 #endif
@@ -101,7 +117,7 @@ void calibrateRSSI(void)
   beep(500);
 
   // Reset RSSI min/max
-  rssi_min = 1024;
+  rssi_min = 4095;
   rssi_max = 0;
 
   uint32_t rssi_average = 0;
@@ -147,6 +163,10 @@ void rssiFilterUpdate(void)
 
 void loop()
 {
+#ifdef ESP32
+  digitalWrite(PIN_LED, (millis() % 2000) > (((last_activity + 1000) > millis()) ? 100 : 1000));
+#endif
+
   // Always read RSSI when device is idling or timing
   if (state == DEVICE_IDLE || state == DEVICE_TIMING) {
     rssi = RX5808.readRssi();
@@ -168,6 +188,11 @@ void loop()
   mspProcess(&swSerial, &swPort);
 #endif
 
+#ifdef ESP32
+  mspProcess(&ESP_BT, &btPort);
+#endif
+
+
   // Dispatch debug data
   if (debug == 1) {
     mspProcessDebug(&Serial, &hwPort);
@@ -175,7 +200,7 @@ void loop()
 }
 
 /******************************************************************
- * LAP PROCESSING
+   LAP PROCESSING
  ******************************************************************/
 
 void lapTimerStart(uint32_t timerStart)
@@ -250,7 +275,7 @@ void lapProcess()
         // Reset peak
         lapPeakReset();
 
-		    // Beep to indicate lap started
+        // Beep to indicate lap started
         beep(100);
       }
       break;
@@ -294,7 +319,7 @@ void beep(uint16_t time)
 }
 
 /******************************************************************
- * RX5808
+   RX5808
  ******************************************************************/
 
 void channelUpdate(void) {
@@ -302,7 +327,7 @@ void channelUpdate(void) {
 }
 
 /******************************************************************
- * MSP SERIAL PROCESSING
+   MSP SERIAL PROCESSING
  ******************************************************************/
 
 void mspProcess(Stream *serialPort, mspPort_t *port)
@@ -313,6 +338,7 @@ void mspProcess(Stream *serialPort, mspPort_t *port)
   writer = bufWriterInit(buf, sizeof(buf), (bufWrite_t) mspSerialWriteBuf, serialPort);
 
   while (serialPort->available() > 0) {
+    last_activity = millis();
     uint8_t c = serialPort->read();
     bool consumed = mspProcessReceivedData(c);
 
@@ -351,7 +377,7 @@ void mspProcessDebug(Stream *serialPort, mspPort_t *port)
 }
 
 /******************************************************************
- * EEPROM
+   EEPROM
  ******************************************************************/
 
 void readEEPROM(void)
@@ -385,6 +411,10 @@ void writeEEPROM(void)
   EEPROM.write(EEPROM_ADR_RSSI_FILTER_Q_H, highByte(rssi_filter_q));
   EEPROM.write(EEPROM_ADR_RSSI_FILTER_R_L, lowByte(rssi_filter_r));
   EEPROM.write(EEPROM_ADR_RSSI_FILTER_R_H, highByte(rssi_filter_r));
+
+  #ifdef ESP32
+  EEPROM.commit();
+  #endif
 }
 
 void resetEEPROM(void)

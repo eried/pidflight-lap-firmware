@@ -1,6 +1,9 @@
 #ifndef const_h
 #define const_h
 
+// Enable Bluetooth Serial for the ESP32
+#define ESP32
+
 // Enable for PIDflight Lap support
 //#define PDFL
 
@@ -12,12 +15,12 @@
 
 // Enable buzzer
 #if defined(PDFL)
-  #define BUZZER
+#define BUZZER
 #endif
 
 // Enable software serial
 #if defined(ERLT)
-  #define SOFTWARE_SERIAL
+#define SOFTWARE_SERIAL
 #endif
 
 // Pin outs
@@ -25,14 +28,21 @@
 #define PIN_SLAVE_SELECT      11
 #define PIN_SPI_CLOCK         12
 #if defined(ERLT)
-  #define PIN_RSSI            A7
-  #define PIN_SOFTSERIAL_RX   6
-  #define PIN_SOFTSERIAL_TX   7
+#define PIN_RSSI            A7
+#define PIN_SOFTSERIAL_RX   6
+#define PIN_SOFTSERIAL_TX   7
 #elif defined(CHRF)
-  #define PIN_RSSI            A3
+#define PIN_RSSI            A3
+#elif defined(ESP32)
+#define PIN_LED 21
+#define PIN_SPI_DATA        19
+#define PIN_SLAVE_SELECT    22
+#define PIN_SPI_CLOCK       23
+#define PIN_BUZZER          15
+#define PIN_RSSI            34
 #else
-  #define PIN_BUZZER          6
-  #define PIN_RSSI            A6
+#define PIN_BUZZER          6
+#define PIN_RSSI            A6
 #endif
 
 // Default RSSI threshold

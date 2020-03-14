@@ -18,6 +18,10 @@ static mspPort_t hwPort;
 static mspPort_t swPort;
 #endif
 
+#if defined(ESP32)
+static mspPort_t btPort;
+#endif
+
 uint8_t lap_number;
 
 static void serialize8(uint8_t a)
