@@ -1,7 +1,7 @@
 # ESP32 based timer #
 
 ## Parts ##
-* ESP32 TTGO T8 https://s.click.aliexpress.com/e/_d6sfNUb
+* ESP32 TTGO T8 https://s.click.aliexpress.com/e/_d6sfNUb Reference: https://github.com/LilyGO/TTGO-T8-ESP32
 * RX5808 https://s.click.aliexpress.com/e/_dUaM1rh
 * 2x 4.7K resistors
 * Small battery (optional) i.e.: https://aliexpi.com/ZSsn
