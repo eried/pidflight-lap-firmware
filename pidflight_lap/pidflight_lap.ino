@@ -52,15 +52,17 @@ unsigned long last_activity;
 
 void setup()
 {
-  // Setup serial connections
-  Serial.begin(115200);
-
 #ifdef ESP32
-  EEPROM.begin(16);
   pinMode(PIN_LED, OUTPUT);
   digitalWrite(PIN_LED, HIGH);
+  pinMode(PIN_VBAT, INPUT);
+
+  EEPROM.begin(EEPROM_ADR_RSSI_FILTER_R_H + 1); // Size of EEPROM
   ESP_BT.begin("ESP32 Drone Timer"); //Name of your Bluetooth Signal
 #endif
+
+  // Setup serial connections
+  Serial.begin(115200);
 
 #ifdef SOFTWARE_SERIAL
   swSerial.begin(9600);
@@ -118,7 +120,11 @@ void calibrateRSSI(void)
   beep(500);
 
   // Reset RSSI min/max
+#ifdef ESP32
   rssi_min = 4095;
+#else
+  rssi_min = 1024;
+#endif
   rssi_max = 0;
 
   uint32_t rssi_average = 0;

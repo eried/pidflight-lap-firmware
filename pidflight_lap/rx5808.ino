@@ -18,8 +18,8 @@ void RX5808::init()
 
 void RX5808::setFrequency(uint16_t frequency)
 {
- uint8_t frequencyIndex = getFrequencyIndex(frequency);
- setFrequencyByIndex(frequencyIndex);
+  uint8_t frequencyIndex = getFrequencyIndex(frequency);
+  setFrequencyByIndex(frequencyIndex);
 }
 
 uint8_t RX5808::getFrequencyIndex(uint16_t frequency)
@@ -34,7 +34,7 @@ uint16_t RX5808::readRssi()
   volatile uint16_t rssi = 0;
 
   for (uint8_t i = 0; i < RSSI_READS; i++) {
-    rssi += analogRead(rssiPin);
+    rssi += map(analogRead(rssiPin), 0, analogRead(PIN_VBAT), 0, 4095);
   }
 
   rssi = rssi / RSSI_READS; // average of RSSI_READS readings

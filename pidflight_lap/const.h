@@ -34,7 +34,8 @@
 #elif defined(CHRF)
 #define PIN_RSSI            A3
 #elif defined(ESP32)
-#define PIN_LED 21
+#define PIN_LED             21
+#define PIN_VBAT            35
 #define PIN_SPI_DATA        19
 #define PIN_SLAVE_SELECT    22
 #define PIN_SPI_CLOCK       23
