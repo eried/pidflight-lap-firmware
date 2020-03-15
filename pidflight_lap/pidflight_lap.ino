@@ -9,7 +9,15 @@
 #include "serial_msp.c"
 
 #ifdef ESP32
+#include "esp_system.h"
 #include "BluetoothSerial.h"
+
+hw_timer_t *timer = NULL;
+void IRAM_ATTR resetModule() {
+  ets_printf("reboot\n");
+  esp_restart();
+}
+
 BluetoothSerial ESP_BT; //Object for Bluetooth
 #endif
 
@@ -56,6 +64,12 @@ void setup()
   pinMode(PIN_LED, OUTPUT);
   digitalWrite(PIN_LED, HIGH);
   pinMode(PIN_VBAT, INPUT);
+
+  // Watchdog timer https://github.com/espressif/arduino-esp32/issues/841
+  timer = timerBegin(0, 80, true); //timer 0, div 80
+  timerAttachInterrupt(timer, &resetModule, true);
+  timerAlarmWrite(timer, 3000000, false); //set time in us
+  timerAlarmEnable(timer); //enable interrupt
 
   EEPROM.begin(EEPROM_ADR_RSSI_FILTER_R_H + 1); // Size of EEPROM
   ESP_BT.begin("ESP32 Drone Timer"); //Name of your Bluetooth Signal
@@ -171,6 +185,7 @@ void rssiFilterUpdate(void)
 void loop()
 {
 #ifdef ESP32
+  timerWrite(timer, 0); //reset timer (feed watchdog)
   digitalWrite(PIN_LED, (millis() % 2000) > (((last_activity + 1000) > millis()) ? 100 : 1000));
 #endif
 
