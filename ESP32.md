@@ -22,7 +22,7 @@
 ### Switch 
 
 VCC in the ESP32 is not powered when the board is running of the battery, so we need to tap directly to the middle pin of the switch as shown here:
-IMAGE
+![](images/vbat.PNG)
 
 ### Resistor divider
 
