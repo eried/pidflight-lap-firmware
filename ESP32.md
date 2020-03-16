@@ -12,8 +12,8 @@
 | :------------- |:-------------| :-----|
 | 34 | RSSI | Via resistor divider |
 | GND | GND | |
-| 22 | CH1 | |
-| 19 | CH2 | |
+| 19 | CH1 | |
+| 22 | CH2 | |
 | 23 | CH3 | |
 | Switch | +5V | Directly to the middle leg of the ON/OFF switch |
 
