@@ -1,3 +1,4 @@
+
 #include <EEPROM.h>
 #include <math.h>
 
@@ -85,7 +86,7 @@ void setup()
   // Buzzer
 #ifdef BUZZER
   pinMode(PIN_BUZZER, OUTPUT);
-  digitalWrite(PIN_BUZZER, HIGH);
+  digitalWrite(PIN_BUZZER, BUZZER_INITIAL_PIN_MODE);
 #endif
 
   // Set the timer defaults
@@ -334,9 +335,9 @@ void lapProcess()
 void beep(uint16_t time)
 {
 #ifdef BUZZER
-  digitalWrite(PIN_BUZZER, LOW); // activate beep
+  digitalWrite(PIN_BUZZER, !BUZZER_INITIAL_PIN_MODE); // activate beep
   delay(time / 2);
-  digitalWrite(PIN_BUZZER, HIGH);
+  digitalWrite(PIN_BUZZER, BUZZER_INITIAL_PIN_MODE);
 #endif
 }
 

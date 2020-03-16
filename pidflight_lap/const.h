@@ -34,17 +34,20 @@
 #elif defined(CHRF)
 #define PIN_RSSI            A3
 #elif defined(ESP32)
+#define BUZZER
 #define PIN_LED             21
 #define PIN_VBAT            35
 #define PIN_SPI_DATA        19
 #define PIN_SLAVE_SELECT    22
 #define PIN_SPI_CLOCK       23
-#define PIN_BUZZER          15
+#define PIN_BUZZER          25
 #define PIN_RSSI            34
 #else
 #define PIN_BUZZER          6
 #define PIN_RSSI            A6
 #endif
+
+#define BUZZER_INITIAL_PIN_MODE LOW
 
 // Default RSSI threshold
 #define RSSI_THRESHOLD        200
