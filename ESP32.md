@@ -17,7 +17,7 @@
 | 23 | CH3 | |
 | Switch | +5V | Directly to the middle leg of the ON/OFF switch |
 
-* The optional **Buzzer** goes to pin 15 and GND
+* The optional **Buzzer** goes to pin 25 and GND
 
 ### Switch 
 
