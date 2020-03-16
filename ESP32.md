@@ -33,4 +33,20 @@ RSSI from the RX5880 may oscilate between 5V (if powered by USB) and 4.3V to 3.5
 The ESP32 uses pin 35 internally to measure that voltage reference and provide a right RSSI value.
 
 ## Case
-IMAGE
+The case consist of 4 parts. Two pieces of the shell and two pieces for the ON/OFF slider switch. You will need super glue and double sided tape.
+
+On the bottom part, place the battery with tape
+![](images/case_01.PNG)
+
+Place the RX next to it. You can place a heatsink and the buzzer on top of the RX.
+![](images/case_02.PNG)
+
+Notice that the two pieces of the switch slider are glued in a way that interacts with the physical switch of the ESP32. Place both in place with tweezers and drop a small dab of super glue between the plastic parts. Wait and remove it from the assembly and add more glue from the opposite direction now.
+
+Everything should look like this. 
+![](images/case_03.PNG)
+
+You need to fill the led indicator slots. In the image a 3d pen is used to inyect translucent PLA in place but a hot melt glue gun would also work.
+![](images/case_04.PNG)
+
+
