@@ -1,9 +1,9 @@
 # PIDflight ESP32 edition
 
-## Demo
+## Demo video
 [![Youtube](https://img.youtube.com/vi/CKgIOPRDrkA/0.jpg)](https://www.youtube.com/watch?v=CKgIOPRDrkA)
 
-## Build
+## Build one
 [See details here](ESP32.md)
 
 ## Official website
