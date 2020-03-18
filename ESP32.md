@@ -35,6 +35,8 @@ The ESP32 uses pin 35 internally to measure that voltage reference and provide a
 ## Case
 The case consist of 4 parts. Two pieces of the shell and two pieces for the ON/OFF slider switch. You will need super glue and double sided tape.
 
+Download the parts here: https://www.thingiverse.com/thing:4228550
+
 On the bottom part, place the battery with tape
 ![](images/case_01.PNG)
 
