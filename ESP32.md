@@ -51,6 +51,9 @@ Everything should look like this.
 You need to fill the led indicator slots. In the image a 3d pen is used to inyect translucent PLA in place but a hot melt glue gun would also work.
 ![](images/case_04.PNG)
 
+### How was the case made?
+Check the design procedure [here](case)
+
 ## Firmware ##
 
 1. Add ESP32 boards to Arduino IDE adding the following line in preferences: https://dl.espressif.com/dl/package_esp32_index.json
